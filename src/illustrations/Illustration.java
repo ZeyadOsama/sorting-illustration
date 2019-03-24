@@ -12,12 +12,12 @@ import java.util.Collections;
 public class Illustration extends JPanel {
 
     private static final int NUM_OF_ITEMS = 25;
-    private static final int DIM_W = 450;
     private static final int DIM_H = 450;
+    private static final int DIM_W = DIM_H + (NUM_OF_ITEMS * 2) - 2;
     private static final int HORIZON = 450;
     private static final int VERTICAL_INC = 15;
-    private static final int HORIZONTAL_INC = DIM_W / NUM_OF_ITEMS;
-    private static final int TIME_DELAY = 150;
+    private static final int HORIZONTAL_INC = DIM_H / NUM_OF_ITEMS;
+    private static final int TIME_DELAY = 550;
 
     private JButton btnStart;
     private JButton btnReset;
@@ -96,9 +96,10 @@ public class Illustration extends JPanel {
     }
 
     private void drawItem(Graphics g, int item, int index) {
+        int SPACING = index * 2;
         int height = item * VERTICAL_INC;
         int y = HORIZON - height;
-        int x = index * HORIZONTAL_INC;
+        int x = index * HORIZONTAL_INC + SPACING;
         g.fillRect(x, y, HORIZONTAL_INC, height);
     }
 
