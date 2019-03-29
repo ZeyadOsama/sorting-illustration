@@ -3,6 +3,8 @@ package illustrations;
 import sorting.Sorting;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,18 +19,23 @@ public class Illustration extends JPanel {
     private static final int HORIZON = 450;
     private static final int VERTICAL_INC = 15;
     private static final int HORIZONTAL_INC = DIM_H / NUM_OF_ITEMS;
-    private static final int TIME_DELAY = 550;
+
+    private static final int TIME_DELAY_MIN = 1000;
+    private static final int TIME_DELAY_MAX = 50;
+
+    private Timer timer;
+
+    private int currentIndex = NUM_OF_ITEMS - 1;
+    private int TIME_DELAY = (TIME_DELAY_MIN + TIME_DELAY_MAX) / 2;
+    
+    private String[] sortingTechniques = {Sorting.BUBBLE_SORT, Sorting.SELECTION_SORT};
+    private String SORTING_TECHNIQUE = sortingTechniques[0];
+    private Integer[] list;
 
     private JButton btnStart;
     private JButton btnReset;
     private JComboBox<String> comboBoxChoices;
-
-    private Timer timer;
-
-    private String[] sortingTechniques = {Sorting.BUBBLE_SORT, Sorting.SELECTION_SORT};
-    private String SORTING_TECHNIQUE = sortingTechniques[0];
-    private Integer[] list;
-    private int currentIndex = NUM_OF_ITEMS - 1;
+    private JSlider slider;
 
     public Illustration() {
         list = initList();
@@ -71,13 +78,22 @@ public class Illustration extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SORTING_TECHNIQUE = String.valueOf(comboBoxChoices.getSelectedItem());
-                System.out.println(SORTING_TECHNIQUE);
+            }
+        });
+
+        slider = new JSlider(TIME_DELAY_MAX, TIME_DELAY_MIN);
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                TIME_DELAY = slider.getValue();
+                timer.setDelay(TIME_DELAY);
             }
         });
 
         add(btnStart);
         add(btnReset);
         add(comboBoxChoices);
+        add(slider);
     }
 
     private boolean isSortingDone() {
@@ -100,6 +116,10 @@ public class Illustration extends JPanel {
         int height = item * VERTICAL_INC;
         int y = HORIZON - height;
         int x = index * HORIZONTAL_INC + SPACING;
+
+        if (index == currentIndex && currentIndex != NUM_OF_ITEMS - 1)
+            g.setColor(Color.decode("#50C878"));
+
         g.fillRect(x, y, HORIZONTAL_INC, height);
     }
 

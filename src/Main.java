@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class Main {
     private static final String TITLE = "Sorting Techniques";
+    private static final String COMPLEXITY = "Complexity";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
