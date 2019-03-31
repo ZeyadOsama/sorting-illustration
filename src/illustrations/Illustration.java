@@ -44,7 +44,8 @@ public class Illustration extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (isSortingDone()) {
                     ((Timer) e.getSource()).stop();
-                    btnStart.setEnabled(false);
+                    btnStart.setEnabled(true);
+                    comboBoxChoices.setEnabled(true);
                 } else {
                     list = Sorting.sortOneTime(SORTING_TECHNIQUE, list, currentIndex);
                     currentIndex--;
@@ -57,8 +58,8 @@ public class Illustration extends JPanel {
         btnStart = new JButton("Start");
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnStart.setBackground(Color.RED);
                 btnStart.setEnabled(false);
+                comboBoxChoices.setEnabled(false);
                 timer.start();
             }
         });
@@ -69,7 +70,6 @@ public class Illustration extends JPanel {
                 list = initList();
                 currentIndex = NUM_OF_ITEMS - 1;
                 repaint();
-                btnStart.setEnabled(true);
             }
         });
 
